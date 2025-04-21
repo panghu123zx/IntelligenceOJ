@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: phoj-question-service
+  # ?? dev ??
+  profiles:
+    active: dev
+  # ?? swagger3
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # session ??
+  session:
+    store-type: redis
+    # 30 ???
+    timeout: 2592000
+
+  # ?????
+  # todo ?????
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ojdata
+    username: ${phoj.datasource.username}
+    password: ${phoj.datasource.password}
+  # Redis ??
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    timeout: 5000
+    password: ${phoj.redis.password}
+  # ????
+  servlet:
+    multipart:
+      # ????
+      max-file-size: 10MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  rabbitmq:
+    host: localhost
+    port: 5672
+    password: ${phoj.rabbitmq.password}
+    username: ${phoj.rabbitmq.username}
+server:
+  address: 0.0.0.0
+  port: 8093
+  servlet:
+    context-path: /api/question
+    # cookie 30 ???
+    session:
+      cookie:
+        max-age: 2592000
+        path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: ''
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # ????????????
+      logic-delete-value: 1 # ?????????? 1?
+      logic-not-delete-value: 0 # ?????????? 0?
+
+# ??????
+knife4j:
+  enable: true
+
+xun-fei:
+  client:
+    appId: ${phoj.client.appId}
+    apiSecret: ${phoj.client.apiSecret}
+    apiKey: ${phoj.client.apiKey}
+
+
+
+

@@ -1,0 +1,40 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: phoj-user-service
+          uri: lb://phoj-user-service
+          predicates:
+            - Path=/api/user/**
+        - id: phoj-question-service
+          uri: lb://phoj-question-service
+          predicates:
+            - Path=/api/question/**
+        - id: phoj-judge-service
+          uri: lb://phoj-judge-service
+          predicates:
+            - Path=/api/judge/**
+        - id: phoj-question-comment
+          uri: lb://phoj-question-comment
+          predicates:
+            - Path=/api/comment/**
+  application:
+    name: phoj-gateway-service
+  main:
+    web-application-type: reactive
+server:
+  port: 8091
+  address: 0.0.0.0
+
+knife4j:
+  gateway:
+    enabled: true
+    # 指定服务发现的模式聚合微服务文档，并且是默认`default`分组
+    strategy: discover
+    discover:
+      enabled: true
+      # 指定版本号(Swagger2|OpenAPI3)
+      version : swagger2
